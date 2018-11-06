@@ -162,21 +162,25 @@ def display_menu(menu):
     order = []
     user_active = True
 # check menu type
+    exit = len(menu)
     if isinstance(menu, tuple):
+        
+
 # create meu list with index
+       
         menu_list = []
         index = 1
         for i in menu:
             menu_list.append(str(index) + '.'+ i )
             index = index + 1
 # add other function      
-        menu_list.append(str(index)+ '.' + "Check my order")
-        menu_list.append(str(index + 1)+ '.' +"Delete order item")
-        menu_list.append(str(index + 2)+ '.' +'Exit')
+        menu_list.append(str(index)+ '.' +'Exit')
+        menu_list.append(str(index + 1)+ '.' + "Check my order")
+        menu_list.append(str(index + 2)+ '.' +"Delete order item")
         len_menu = len(menu_list)
-        exit_n = len_menu
-        del_n = len_menu - 1 
-        order_n = len_menu - 2
+        exit_n = len_menu - 2
+        del_n = len_menu 
+        order_n = len_menu - 1
 # app
         while user_active:
             print("Menu: ")
@@ -193,6 +197,8 @@ def display_menu(menu):
 
                 elif choice == exit_n:
                     user_active = False
+                    return len_menu,exit
+                    
                 
                 elif choice == order_n:
                     print("Your order: " + str(order))
@@ -211,10 +217,10 @@ def display_menu(menu):
             except ValueError:
                 print("That's not a number! Please try again!")
                 print(20 * '-')
-
     else:
         error = -1
-        return error
+        return error,exit
+  
 
 # ------ Place code above here /\ /\ /\ ------
 
