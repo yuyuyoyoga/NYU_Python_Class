@@ -169,13 +169,17 @@ class PandasChain:
     
     # 10 pts - Returns all of the values (Pandas coins transferred) of all transactions from every block as a single list
     def get_values(self):
-        values_list=[]
+       #values_list=[]
+       #for c in self.__chain:
+       #    values_list = values_list + c.get_values()
+       #    values_list = values_list + self.__current_block.get_values()
+       #return values_list
+        time_list=[]
         for c in self.__chain:
-            values_list = values_list + c.get_values()
-        
+            time_list = time_list + c.get_values()
+        time_list = time_list + self.__current_block.get_values()
+        return time_list    
 
-        values_list = values_list + self.__current_block.get_values()
-        return values_list
 class Block:
     # 5 pts for constructor
     def __init__(self,seq_id,prev_hash): 
@@ -202,7 +206,7 @@ class Block:
         # Hash of timestamp, sender, receiver, value
         tx_hash = hashlib.sha256(str(str(ts)+str(s)+str(r)+str(v)).encode('utf-8')).hexdigest()
         # Create DataFrame with transaction data (a DataFrame with only 1 row)
-        new_transaction = pd.DataFrame(data = [[str(ts),s,r,v,tx_hash]],columns= self.__col_names)
+        new_transaction = pd.DataFrame(data = [[ts,s,r,v,tx_hash]],columns= self.__col_names)
         # Append to the transactions data
         self.__transactions = self.__transactions.append(new_transaction)
     # 10 pts -Print all transactions contained by this block
@@ -235,10 +239,14 @@ class Block:
         self.__merkle_tx_hash = hashlib.sha256(str(rows).encode('utf-8')).hexdigest()                         
         return self.__merkle_tx_hash
     def get_values(self):
-        coin_list = []
+       #coin_list = []
+       #for i,r in self.__transactions.iterrows():
+       #        coin_list.append(r['Value'])
+       #return coin_list
+        time_list = []
         for i,r in self.__transactions.iterrows():
-                coin_list.append(r['Value'])
-        return coin_list
+           time_list.append(r['Timestamp'])
+        return time_list 
 
 class TestAssignment4(unittest.TestCase):
     def test_chain(self):
